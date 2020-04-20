@@ -78,7 +78,7 @@ If you have any questions about the project, feel free to contact me.
 
 -   [x] User
 -   [x] Survey
--   [ ] Answer
+-   [x] Answer
 -   [ ] Result
 -   [ ] Export
 -   [ ] Documentation
