@@ -4,21 +4,16 @@ const Question = require('../models/Question')
 const Answer = require('../models/Answer')
 const verify = require('../middleware/verify.js')
 
-router.get('/all', verify, async (req, res) => {
+router.get('/all', async (req, res) => {
     try {
-        if (req.user.role === 'admin') {
-            const surveys = await Survey.find()
-            res.json(surveys)
-        } else {
-            const surveys = await Survey.find({ reachable: true })
-            res.json(surveys)
-        }
+        const surveys = await Survey.find({ reachable: true })
+        res.json(surveys)
     } catch (error) {
         res.status(400).send(error)
     }
 })
 
-router.get('/', verify, async (req, res) => {
+router.get('/all', verify, async (req, res) => {
     try {
         if (req.user.role === 'admin') {
             const surveys = await Survey.find()
@@ -74,7 +69,7 @@ router.post('/add', verify, async (req, res) => {
     res.send({ surveyId: survey._id })
 })
 
-router.get('/:survey', verify, async (req, res) => {
+router.get('/:survey', async (req, res) => {
     try {
         const survey = await Survey.findOne({ surveyId: req.params.surveyId })
         const questions = await Question.find({

@@ -22,6 +22,8 @@ app.use(express.json())
 
 const userRoute = require('./routes/user.js')
 const surveyRoute = require('./routes/survey.js')
+const answerRoute = require('./routes/answer.js')
+const resultRoute = require('./routes/result.js')
 /**
  *
  * Route Middlewares
@@ -31,6 +33,9 @@ const surveyRoute = require('./routes/survey.js')
 
 app.use('/api/user', userRoute)
 app.use('/api/survey', surveyRoute)
+app.use('/api/answer', answerRoute)
+app.use('/api/result', resultRoute)
+
 app.listen(process.env.PORT, () => {
     console.log('Server Up! Listen port ' + process.env.PORT)
 })
