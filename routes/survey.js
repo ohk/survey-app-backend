@@ -5,6 +5,11 @@ const Answer = require('../models/Answer')
 const verify = require('../middleware/verify.js')
 
 router.get('/all', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
     try {
         const surveys = await Survey.find({ reachable: true })
         res.json(surveys)
@@ -13,7 +18,12 @@ router.get('/all', async (req, res) => {
     }
 })
 
-router.get('/all', verify, async (req, res) => {
+router.get('/mys', verify, async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
     try {
         if (req.user.role === 'admin') {
             const surveys = await Survey.find()
@@ -30,6 +40,11 @@ router.get('/all', verify, async (req, res) => {
 })
 
 router.post('/add', verify, async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
     /**
      * Create survey object from data
      */
@@ -70,6 +85,11 @@ router.post('/add', verify, async (req, res) => {
 })
 
 router.get('/:survey', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
     try {
         const survey = await Survey.findOne({ surveyId: req.params.surveyId })
         const questions = await Question.find({
@@ -87,6 +107,11 @@ router.get('/:survey', async (req, res) => {
 })
 
 router.post('/unreachable/', verify, async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
     const survey = await Survey.findOne({ _id: req.body.surveyId })
     console.log(req.user._id.toString(), survey.surveyAuthor)
     if (req.user._id.toString() === survey.surveyAuthor) {
@@ -98,6 +123,11 @@ router.post('/unreachable/', verify, async (req, res) => {
 })
 
 router.delete('/:survey', verify, async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
     const survey = await Survey.findOne({ surveyId: req.params.surveyId })
     if (req.user._id.toString() === survey.surveyAuthor) {
         await Survey.deleteOne({ _id: req.params.surveyId })

@@ -5,6 +5,11 @@ const Answer = require('../models/Answer')
 const verify = require('../middleware/verify.js')
 
 router.post('/add', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
     try {
         answers = req.body.answers
         console.log(answers)

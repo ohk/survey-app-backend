@@ -5,6 +5,11 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 router.post('/register', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
     /**
      * Validate data
      */
@@ -46,6 +51,11 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
     /**
      * Validate data
      */

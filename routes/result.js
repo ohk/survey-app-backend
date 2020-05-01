@@ -5,6 +5,11 @@ const Answer = require('../models/Answer')
 const verify = require('../middleware/verify.js')
 
 router.get('/:survey', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
     let result = []
     const quIDs = await Question.find({ surveyId: req.params.survey })
     for (let i = 0; i < quIDs.length; i++) {
