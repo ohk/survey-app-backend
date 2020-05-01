@@ -66,7 +66,6 @@ router.post('/add', verify, async (req, res) => {
     }
 
     const questionArray = req.body.questions
-    console.log(survey)
     try {
         questionArray.forEach((question) => {
             let ques = new Question({
@@ -76,7 +75,6 @@ router.post('/add', verify, async (req, res) => {
                 surveyId: survey._id
             })
             ques.save()
-            console.log(ques)
         })
     } catch (error) {
         survey.remove()
@@ -97,8 +95,6 @@ router.get('/:surveyId', async (req, res) => {
         const questions = await Question.find({
             surveyId: survey._id.toString()
         })
-        console.log(survey)
-        console.log(survey.surveyName, survey.surveyTags, questions)
         return res.send({
             surveyName: survey.surveyName,
             surveyTags: survey.surveyTags,
@@ -116,7 +112,6 @@ router.post('/unreachable/', verify, async (req, res) => {
         'Origin, X-Requested-With, Content-Type, Accept'
     )
     const survey = await Survey.findOne({ _id: req.body.surveyId })
-    console.log(req.user._id.toString(), survey.surveyAuthor)
     if (req.user._id.toString() === survey.surveyAuthor) {
         await Survey.updateOne({ _id: req.body.surveyId }, { reachable: false })
         return res.send('Updated')

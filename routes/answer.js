@@ -29,6 +29,7 @@ router.post('/add', async (req, res) => {
                     ipAddress: req.connection.remoteAddress
                 })
                 await answer.save()
+                console.log(answer)
             }
             res.status(200).send('Added')
         } else {
