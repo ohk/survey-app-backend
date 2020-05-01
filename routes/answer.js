@@ -14,7 +14,12 @@ router.post('/add', async (req, res) => {
         answers = req.body.answers
         console.log(answers)
         console.log()
-        if ((await Answer.countDocuments({ email: req.body.email })) === 0) {
+        if (
+            (await Answer.countDocuments({
+                email: req.body.email,
+                surveyId: req.body.surveyId
+            })) === 0
+        ) {
             for (let i = 0; i < answers.length; i++) {
                 let answer = new Answer({
                     email: req.body.email,
