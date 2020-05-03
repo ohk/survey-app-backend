@@ -6,8 +6,7 @@ const surveySchema = new mongoose.Schema({
         required: true
     },
     surveyTag: {
-        type: String,
-        required: true
+        type: String
     },
     surveyAuthor: {
         type: String,

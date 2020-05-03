@@ -56,6 +56,7 @@ router.post('/add', verify, async (req, res) => {
         answerLimit: req.body.survey.answerLimit,
         reachable: req.body.survey.reachable
     })
+    console.log(survey)
     /**
      * save survey
      */
@@ -75,6 +76,7 @@ router.post('/add', verify, async (req, res) => {
                 surveyId: survey._id
             })
             ques.save()
+            console.log(ques)
         })
     } catch (error) {
         survey.remove()
