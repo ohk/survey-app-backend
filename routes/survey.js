@@ -56,7 +56,6 @@ router.post('/add', verify, async (req, res) => {
         answerLimit: req.body.survey.answerLimit,
         reachable: req.body.survey.reachable
     })
-    console.log(survey)
     /**
      * save survey
      */
@@ -76,7 +75,6 @@ router.post('/add', verify, async (req, res) => {
                 surveyId: survey._id
             })
             ques.save()
-            console.log(ques)
         })
     } catch (error) {
         survey.remove()
@@ -93,7 +91,9 @@ router.get('/:surveyId', async (req, res) => {
         'Origin, X-Requested-With, Content-Type, Accept'
     )
     try {
-        const survey = await Survey.findOne({ _id: req.params.surveyId })
+        const survey = await Survey.findOne({
+            _id: req.params.surveyId.toString()
+        })
         const questions = await Question.find({
             surveyId: survey._id.toString()
         })
@@ -128,11 +128,11 @@ router.delete('/:survey', verify, async (req, res) => {
         'Access-Control-Allow-Headers',
         'Origin, X-Requested-With, Content-Type, Accept'
     )
-    const survey = await Survey.findOne({ _id: req.body.surveyId })
+    const survey = await Survey.findOne({ _id: req.params.survey })
     if (req.user._id.toString() === survey.surveyAuthor) {
-        await Survey.deleteOne({ _id: req.params.surveyId })
-        await Question.deleteMany({ surveyId: req.params.surveyId })
-        await Answer.deleteMany({ surveyId: req.params.surveyId })
+        await Survey.deleteOne({ _id: req.params.survey })
+        await Question.deleteMany({ surveyId: req.params.survey })
+        await Answer.deleteMany({ surveyId: req.params.survey })
         return res.send('deleted')
     } else {
         return res.status(401).send('Access denied!')
