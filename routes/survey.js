@@ -116,7 +116,22 @@ router.post('/unreachable/', verify, async (req, res) => {
     const survey = await Survey.findOne({ _id: req.body.surveyId })
     if (req.user._id.toString() === survey.surveyAuthor) {
         await Survey.updateOne({ _id: req.body.surveyId }, { reachable: false })
-        return res.send('Updated')
+        return res.send('Unreachable')
+    } else {
+        return res.status(401).send('Access denied!')
+    }
+})
+
+router.post('/reachable/', verify, async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
+    const survey = await Survey.findOne({ _id: req.body.surveyId })
+    if (req.user._id.toString() === survey.surveyAuthor) {
+        await Survey.updateOne({ _id: req.body.surveyId }, { reachable: true })
+        return res.send('Reachable')
     } else {
         return res.status(401).send('Access denied!')
     }
