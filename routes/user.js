@@ -21,8 +21,6 @@ router.post('/register', async (req, res) => {
      */
     const emailExists = await User.findOne({ email: req.body.email })
     if (emailExists) return res.status(400).send('Email already exists')
-    const usernameExits = await User.findOne({ username: req.body.username })
-    if (usernameExits) return res.status(400).send('Username is already exits')
 
     /**
      * Hash the password
@@ -34,7 +32,6 @@ router.post('/register', async (req, res) => {
      * Create new user object from request body
      */
     const user = new User({
-        username: req.body.username,
         password: hashedPassword,
         email: req.body.email
     })
@@ -79,7 +76,9 @@ router.post('/login', async (req, res) => {
      * Send token for validate user
      */
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
-    res.header('auth-token', token).send(token)
+    var userDetails = {}
+    userDetails.token = token
+    res.status(200).send(userDetails)
 })
 router.post('/forgotPassword', async (req, res) => {})
 module.exports = router
