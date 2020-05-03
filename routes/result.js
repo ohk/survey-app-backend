@@ -28,12 +28,16 @@ router.get('/:survey', async (req, res) => {
         } else {
             let answers = []
             let count = quIDs[i].qAnswer
+
             for (let index = 1; index < count.length + 1; index++) {
                 counts = await Answer.countDocuments({
                     questionId: quIDs[i]._id,
                     answer: index
                 })
-                answers.push(counts)
+                tmp2 = {}
+                tmp2.text = quIDs[i].qAnswer[index - 1].text
+                tmp2.count = counts
+                answers.push(tmp2)
             }
             tmp.answers = answers
         }
